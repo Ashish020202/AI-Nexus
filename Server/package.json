@@ -20,7 +20,15 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "@fal-ai/client": "^1.2.3",
+    "@types/axios": "^0.14.4",
     "@types/cors": "^2.8.17",
-    "express": "^4.21.2"
+    "@types/node-cron": "^3.0.11",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "node-cron": "^3.0.3",
+    "node-mailjet": "^6.0.6",
+    "replicate": "^1.0.1"
   }
 }

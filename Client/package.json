@@ -10,8 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@magenta/music": "^1.23.1",
+    "axios": "^1.7.9",
+    "lucide-react": "^0.475.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.2.0",
+    "shadcn": "^2.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

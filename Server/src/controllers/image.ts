@@ -1,38 +1,62 @@
 import express, { Request, Response } from 'express';
 import { fal } from "@fal-ai/client";
-// import { FAL_AI_API_KEY, FAL_AI_API_URL } from '../config';
-fal.config({ credentials:process.env.FAL_AI_API_KEY });
+import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
+const FAL_KEY = process.env.FAL_KEY;
 
-const router = express.Router();
+
+const FAL_API_URL = "https://queue.fal.run/fal-ai/flux-pro/v1.1-ultra";
+
+
+
 
 export const generateImage = async (req: Request, res: any) => {
     try {
-        const { 
-            prompt, 
-            num_images = 1, 
-            output_format = "jpeg", 
-            aspect_ratio = "16:9",
-            finetune_id = "", 
-            finetune_strength = 0.5 
-        } = req.body;
+        const { prompt } = req.body;
 
-        if (!prompt) return res.status(400).json({ error: "Prompt is required" });
+        if (!prompt) {
+            return res.status(400).json({ error: "Prompt is required" });
+        }
 
-        const result = await fal.subscribe("fal-ai/flux-pro/v1.1-ultra-finetuned", {
-            input: { prompt, num_images, output_format, aspect_ratio, finetune_id, finetune_strength },
-            logs: true,
-            onQueueUpdate: (update) => {
-                if (update.status === "IN_PROGRESS") {
-                    update.logs.map((log) => log.message).forEach(console.log);
+        const response = await axios.post(
+            FAL_API_URL,
+            { prompt },
+            {
+                headers: {
+                    "Authorization": `Key ${FAL_KEY}`,
+                    "Content-Type": "application/json"
                 }
-            },
-        });
+            }
+        );
 
-        return res.json({ imageUrl: result.data });
+        const requestId = response.data.request_id;
+        res.json({ requestId });
     } catch (error) {
-        console.error("Error generating image:", error);
-        return res.status(500).json({ error: "Image generation failed" });
+        console.error(error);
+        res.status(500).json({ error: "Error submitting request" });
     }
 };
+
+export const getImage = async (req: Request, res: any) => {
+    try {
+        const { requestId } = req.params;
+
+        const response = await axios.get(
+            `https://queue.fal.run/fal-ai/flux-pro/requests/${requestId}`,
+            {
+                headers: {
+                    "Authorization": `Key ${FAL_KEY}`
+                }
+            }
+        );
+
+        res.json(response.data);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error fetching request result" });
+    }
+};
+
 
 export default generateImage;

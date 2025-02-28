@@ -1,6 +1,10 @@
 import axios from "axios";
 import Mailjet from "node-mailjet";
 import { Request,Response } from "express";
+import dotenv from 'dotenv';
+dotenv.config();
+const HUGGING_FACE_TOKEN= process.env.HUGGING_FACE_TOKEN
+const HUGGING_FACE_API_URL = process.env.HUGGING_FACE_API_URL_
 
 const generateEmailContent = async (emailType: string, userDetails: string) => {
     const prompt = `Write a professional and structured ${emailType} email based on the following details: ${userDetails}. 
@@ -11,7 +15,7 @@ const generateEmailContent = async (emailType: string, userDetails: string) => {
   
     try {
       const response = await axios.post(
-        "https://api-inference.huggingface.co/models/facebook/blenderbot-3B",
+         HUGGING_FACE_API_URL||'',
         { inputs: prompt },
         { headers: { Authorization: `Bearer ${process.env.HUGGING_FACE_TOKEN}` } }
       );

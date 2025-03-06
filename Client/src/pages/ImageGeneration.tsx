@@ -103,7 +103,7 @@ const ImageGenerationUI = () => {
               </div>
             ) : (
               <div className="mt-8 text-center text-gray-400 border border-gray-800 rounded-lg p-8">
-                You still have yet to make your first AI image generation. Please type a prompt above to create your first image set.
+               Please type a prompt above to create your first image set.
               </div>
             )}
           </div>

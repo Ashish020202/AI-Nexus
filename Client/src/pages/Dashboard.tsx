@@ -2,6 +2,7 @@ import React from 'react';
 import { ChevronDown } from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
 import videologo from '../assets/AI-Video-of-alien-in-Las-vegas.gif'
+import Navbar from './Navbar';
 
 const Dashboard: React.FC = () => {
   return (
@@ -12,44 +13,7 @@ const Dashboard: React.FC = () => {
         {/* Background gradient effect */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-30"></div>
         
-        {/* Navbar */}
-        <nav className="relative z-10 flex items-center justify-between px-6 py-4 md:px-12">
-          <div className="flex items-center">
-            {/* <div className="mr-8">
-              <img 
-                src="/logo-placeholder.svg" 
-                alt="Leonardo.AI Logo" 
-                className="h-8 w-8"
-              />
-              <span className="ml-2 text-xl font-semibold">Leonardo.Ai</span>
-            </div> */}
-            
-            <div className="hidden md:flex space-x-8">
-              <div className="flex items-center">
-                <span>Features</span>
-                <ChevronDown className="ml-1 h-4 w-4" />
-              </div>
-              <div className="flex items-center">
-                <span>Solutions</span>
-                <ChevronDown className="ml-1 h-4 w-4" />
-              </div>
-              {/* <div className="flex items-center">
-                <span></span>
-                <ChevronDown className="ml-1 h-4 w-4" />
-              </div> */}
-              <span>Team Member</span>
-              {/* <span>For Developers</span> */}
-              <span>Contact</span>
-            </div>
-          </div>
-          
-          <button className="rounded-full bg-zinc-800 px-6 py-2 hover:bg-zinc-700 transition-colors">
-            Launch App
-          </button>
-        </nav>
-
-
-
+      <Navbar />
 
         <div className="w-full bg-black rounded-3xl p-10 overflow-hidden relative">
       {/* Container for the entire hero section */}

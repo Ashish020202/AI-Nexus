@@ -10,57 +10,64 @@ const MusicGenerationUI = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleGenerate = async () => {
-    if (!prompt.trim() || !referenceUrl.trim()) {
-      setError("Please enter both a prompt and a reference audio URL.");
-      return;
+  if (!prompt.trim() || !referenceUrl.trim()) {
+    setError("Please enter both a prompt and a reference audio URL.");
+    return;
+  }
+
+  setLoading(true);
+  setError(null);
+  setMusicUrl(null);
+
+  try {
+    const response = await fetch("http://localhost:5000/api/gen-music", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prompt, reference_audio_url: referenceUrl }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to generate music.");
     }
 
-    setLoading(true);
-    setError(null);
-    setMusicUrl(null);
+    const { requestId } = await response.json();
 
-    try {
-      const response = await fetch("http://localhost:5000/api/gen-music", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ prompt, reference_audio_url: referenceUrl }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to generate music.");
-      }
-      console.log("res",response);
+    // Polling logic to check music generation status
+    let status = "IN_PROGRESS";
+    while (status === "IN_PROGRESS") {
+      await new Promise((resolve) => setTimeout(resolve, 5000)); // Wait for 5 seconds
+      const statusResponse = await fetch(`http://localhost:5000/api/check-music/${requestId}`);
+      const statusData = await statusResponse.json();
+      status = statusData.status;
       
-
-      const { requestId } = await response.json();
-      let status = "in_progress";
-      while (status === "in_progress") {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-        const statusResponse = await fetch(
-          `http://localhost:5000/api/check-music/${requestId}`
-        );
-        const statusData = await statusResponse.json();
-        status = statusData.status;
-      }
-
-      if (status !== "completed") {
+      console.log("Music generation status:", status);
+      
+      if (status === "FAILED") {
         throw new Error("Music generation failed.");
       }
-
-      const resultResponse = await fetch(
-        `http://localhost:5000/api/get-music/${requestId}`
-      );
-      const resultData = await resultResponse.json();
-
-      setMusicUrl(resultData.music_url);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
     }
-  };
+
+    if (status !== "COMPLETED") {
+      throw new Error("Unexpected status: " + status);
+    }
+
+    // Fetch the generated music URL
+    const resultResponse = await fetch(`http://localhost:5000/api/get-music/${requestId}`);
+    const resultData = await resultResponse.json();
+    
+    if (!resultData.audio) {
+      throw new Error("Failed to retrieve generated music.");
+    }
+
+    setMusicUrl(resultData.audio.url);
+  } catch (err: any) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-[#0B0B0F] text-white p-8">

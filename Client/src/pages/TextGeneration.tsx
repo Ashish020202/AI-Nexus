@@ -53,11 +53,11 @@ const TextGeneration = () => {
       <Sidebar />
       <div className="flex-1">
         <div className="bg-[#1A1A1F] rounded-lg p-8">
-          <div className="mb-4">
+          <div className="mb-4 p-4">
             <input
               type="text"
               placeholder="Enter a prompt..."
-              className="bg-[#0B0B0F] w-full p-2 text-gray-300 rounded-md mb-2"
+              className="bg-[#0B0B0F] w-full p-4 text-white rounded-md mb-2 border border-purple-600"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />

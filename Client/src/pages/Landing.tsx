@@ -1,6 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
+
 
 const Landing = () => {
+
+const navigate = useNavigate();
+
+const handleClick = () => {
+
+  navigate('/Dashboard')
+
+}
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white flex flex-col items-center justify-center px-4 relative overflow-hidden">
       
@@ -78,6 +89,7 @@ const Landing = () => {
             </div>
           ))}
         </div>
+        <button className="bg-gradient-to-b from-[#1a1a1a]/80 to-[#1a1a1a]/40 p-4 mt-8 rounded" onClick={()=>handleClick()}>Get Started</button>
       </div>
     </div>
   );

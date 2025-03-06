@@ -6,7 +6,7 @@ dotenv.config();
 const FAL_KEY = process.env.FAL_KEY;
 
 
-const FAL_API_URL = "https://queue.fal.run/fal-ai/flux-pro/v1.1-ultra";
+const FAL_API_URL = "https://queue.fal.run/fal-ai/minimax-music";
 
 export const genMusic = async (req:Request,res:Response) => {
 
@@ -41,6 +41,22 @@ export const genMusic = async (req:Request,res:Response) => {
         res.status(500).json({ error: "Internal server error" });
       }
 
+}
+
+
+export const checkMusic = async (req:Request,res:Response) => {
+    try {
+        const { requestId } = req.params;
+    
+        const response = await axios.get(`${FAL_API_URL}/requests/${requestId}/status`, {
+          headers: { Authorization: `Key ${FAL_KEY}` },
+        });
+    
+        res.json(response.data);
+      } catch (error) {
+        console.error("Error fetching request status:", error);
+        res.status(500).json({ error: "Internal server error" });
+      }
 }
 
 export const getMusic =async (req:Request,res:Response) => {

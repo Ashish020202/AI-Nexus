@@ -24,6 +24,7 @@
     "@types/axios": "^0.14.4",
     "@types/cors": "^2.8.17",
     "@types/node-cron": "^3.0.11",
+    "cohere-ai": "^7.16.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

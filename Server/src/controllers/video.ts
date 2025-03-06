@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { fal } from "@fal-ai/client";
 // import { FAL_AI_API_KEY, FAL_AI_API_URL } from '../config';
-fal.config({ credentials:process.env.FAL_AI_API_KEY });
+fal.config({ credentials:process.env.FAL_KEY });
 
 export const generateVideo  = async (req:Request,res:any) => {
     try {

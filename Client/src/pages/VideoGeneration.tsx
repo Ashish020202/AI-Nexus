@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Sidebar from './sidebar'
 import { Maximize2 } from 'lucide-react';
+import Navbar from './Navbar';
 
 
 const VideoGeneration = () => {
@@ -75,6 +76,9 @@ const VideoGeneration = () => {
 
 
   return (
+    <> 
+     {/* <Navbar /> */}
+   
     <div className="min-h-screen bg-[#0B0B0F] text-white p-8">
     <div className="flex gap-6">
       <Sidebar />
@@ -104,8 +108,8 @@ const VideoGeneration = () => {
           {error && <p className="text-red-500">{error}</p>}
 
           {VideoUrl ? (
-            <div className="mt-10 text-center w-3/4 h-full m-auto">
-              <video src={VideoUrl}  className="rounded-lg mx-auto" />
+            <div className="mt-10 text-center w-full h-full m-auto">
+              <video src={VideoUrl} controls   autoPlay  className="rounded-lg mx-auto" />
             </div>
           ) : (
             <div className="mt-8 text-center text-gray-400 border border-gray-800 rounded-lg p-8">
@@ -116,6 +120,7 @@ const VideoGeneration = () => {
       </div>
     </div>
   </div>
+  </>
   )
 }
 

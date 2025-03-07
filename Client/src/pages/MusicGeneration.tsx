@@ -16,6 +16,7 @@ const MusicGenerationUI = () => {
   }
 
   //ref url = https://fal.media/files/lion/OOTBTSlxKMH_E8H6hoSlb.mpga
+  //https://storage.googleapis.com/falserverless/model_tests/diffrythm/rock_en.wav
 
   setLoading(true);
   setError(null);
@@ -27,7 +28,7 @@ const MusicGenerationUI = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ prompt, reference_audio_url: referenceUrl }),
+      body: JSON.stringify({ prompt, reference_audio_url: 'https://fal.media/files/lion/OOTBTSlxKMH_E8H6hoSlb.mpga' }),
     });
 
     if (!response.ok) {
@@ -85,13 +86,13 @@ const MusicGenerationUI = () => {
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
               />
-              <input
+              {/* <input
                 type="text"
                 placeholder="Enter a reference audio URL..."
                 className="bg-[#0B0B0F] w-full p-2 text-gray-300 rounded-md"
                 value={referenceUrl}
                 onChange={(e) => setReferenceUrl(e.target.value)}
-              />
+              /> */}
             </div>
             <button
               className="bg-gray-700 text-gray-300 px-4 py-2 rounded-lg w-full"

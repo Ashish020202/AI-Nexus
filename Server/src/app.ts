@@ -19,9 +19,9 @@ app.use(express.json())
 
 app.use('/api',imageRouter)
 app.use('/api',videoRouter)
-app.use('/api',emailRouter)
 app.use('/api',musicRouter)
 app.use('/api',textRouter);
+// app.use('/api',emailRouter)
 
 
 app.listen(PORT, () => {

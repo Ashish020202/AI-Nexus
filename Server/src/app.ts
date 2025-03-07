@@ -4,7 +4,6 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import imageRouter from "./routes/ImageRoutes"
 import videoRouter from "./routes/videoRoutes"
-import emailRouter from "./routes/emailRoutes"
 import musicRouter from "./routes/MusicRoutes"
 import textRouter from "./routes/textRoutes"
 
@@ -21,7 +20,7 @@ app.use('/api',imageRouter)
 app.use('/api',videoRouter)
 app.use('/api',musicRouter)
 app.use('/api',textRouter);
-// app.use('/api',emailRouter)
+
 
 
 app.listen(PORT, () => {

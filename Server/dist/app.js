@@ -9,7 +9,6 @@ var cors_1 = __importDefault(require("cors"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var ImageRoutes_1 = __importDefault(require("./routes/ImageRoutes"));
 var videoRoutes_1 = __importDefault(require("./routes/videoRoutes"));
-var emailRoutes_1 = __importDefault(require("./routes/emailRoutes"));
 var MusicRoutes_1 = __importDefault(require("./routes/MusicRoutes"));
 var textRoutes_1 = __importDefault(require("./routes/textRoutes"));
 dotenv_1.default.config();
@@ -20,7 +19,6 @@ app.use(body_parser_1.default.json());
 app.use(express_1.default.json());
 app.use('/api', ImageRoutes_1.default);
 app.use('/api', videoRoutes_1.default);
-app.use('/api', emailRoutes_1.default);
 app.use('/api', MusicRoutes_1.default);
 app.use('/api', textRoutes_1.default);
 app.listen(PORT, function () {

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Maximize2 } from 'lucide-react';
 import Sidebar from './sidebar';
+import { BASE_URL } from '../config/constant';
 
 const MusicGenerationUI = () => {
   const [prompt, setPrompt] = useState('');
@@ -23,7 +24,7 @@ const MusicGenerationUI = () => {
   setMusicUrl(null);
 
   try {
-    const response = await fetch("http://localhost:5000/api/gen-music", {
+    const response = await fetch(`${BASE_URL}/api/gen-music`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +42,7 @@ const MusicGenerationUI = () => {
     let status = "IN_PROGRESS";
     while (status === "IN_PROGRESS") {
       await new Promise((resolve) => setTimeout(resolve, 5000)); // Wait for 5 seconds
-      const statusResponse = await fetch(`http://localhost:5000/api/check-music/${requestId}`);
+      const statusResponse = await fetch(`${BASE_URL}/api/check-music/${requestId}`);
       const statusData = await statusResponse.json();
       status = statusData.status;
       
@@ -57,7 +58,7 @@ const MusicGenerationUI = () => {
     }
 
     // Fetch the generated music URL
-    const resultResponse = await fetch(`http://localhost:5000/api/get-music/${requestId}`);
+    const resultResponse = await fetch(`${BASE_URL}/api/get-music/${requestId}`);
     const resultData = await resultResponse.json();
     
     if (!resultData.audio) {

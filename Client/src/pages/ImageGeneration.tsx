@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Maximize2 } from 'lucide-react';
 import Sidebar from './sidebar';
+import { BASE_URL } from '../config/constant';
 
 const ImageGenerationUI = () => {
   const [prompt, setPrompt] = useState('');
@@ -14,7 +15,7 @@ const ImageGenerationUI = () => {
   
     while (attempts < maxAttempts) {
       try {
-        const response = await fetch(`http://localhost:5000/api/result/${requestId}`);
+        const response = await fetch(`${BASE_URL}/api/result/${requestId}`);
         const data = await response.json();
   
         if (data.images && data.images.length > 0) {
@@ -49,7 +50,7 @@ const ImageGenerationUI = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/gen-image', {
+      const response = await fetch(`${BASE_URL}/api/gen-image`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt }),

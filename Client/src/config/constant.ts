@@ -1,0 +1,1 @@
+export const BASE_URL = 'https://ai-nexus-1.onrender.com'

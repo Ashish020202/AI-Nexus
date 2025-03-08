@@ -2,6 +2,7 @@ import React from 'react'
 import Sidebar from './sidebar'
 import axios from 'axios'
 import { useState } from 'react'
+import { BASE_URL } from '../config/constant'
 
 const TextGeneration = () => {
 
@@ -24,7 +25,7 @@ const TextGeneration = () => {
 
         try {
 
-        const response =await axios.post('http://localhost:5000/api/text-gen',{message})
+        const response =await axios.post(`${BASE_URL}/api/text-gen`,{message})
         
         // setPrompt(response.data)
         setgeneratedText(response.data.content)

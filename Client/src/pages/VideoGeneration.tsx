@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Sidebar from './sidebar'
 import { Maximize2 } from 'lucide-react';
 import Navbar from './Navbar';
+import { BASE_URL } from '../config/constant';
 
 
 const VideoGeneration = () => {
@@ -16,12 +17,12 @@ const VideoGeneration = () => {
   
     while (true) {
       try {
-        const statusResponse = await fetch(`http://localhost:5000/api/check-video/${requestId}`);
+        const statusResponse = await fetch(`${BASE_URL}/api/check-video/${requestId}`);
         const statusData = await statusResponse.json();
   
         if (statusData.status === "COMPLETED") {
           // Fetch the final video URL
-          const response = await fetch(`http://localhost:5000/api/get-video/${requestId}`);
+          const response = await fetch(`${BASE_URL}/api/get-video/${requestId}`);
           const data = await response.json();
   
           if (data.videoUrl && data.videoUrl.video && data.videoUrl.video.url) {
@@ -54,7 +55,7 @@ const VideoGeneration = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/gen-video', {
+      const response = await fetch(`${BASE_URL}/api/gen-video`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt }),

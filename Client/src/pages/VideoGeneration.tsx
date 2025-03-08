@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import Sidebar from './sidebar'
 import { Maximize2 } from 'lucide-react';
-import Navbar from './Navbar';
 import { BASE_URL } from '../config/constant';
 
 

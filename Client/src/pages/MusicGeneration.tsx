@@ -1,20 +1,15 @@
 import { useState } from 'react';
-import { Maximize2 } from 'lucide-react';
 import Sidebar from './sidebar';
 import { BASE_URL } from '../config/constant';
 
 const MusicGenerationUI = () => {
   const [prompt, setPrompt] = useState('');
-  const [referenceUrl, setReferenceUrl] = useState('');
   const [musicUrl, setMusicUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleGenerate = async () => {
-  if (!prompt.trim() || !referenceUrl.trim()) {
-    setError("Please enter both a prompt and a reference audio URL.");
-    return;
-  }
+ 
 
   //ref url = https://fal.media/files/lion/OOTBTSlxKMH_E8H6hoSlb.mpga
   //https://storage.googleapis.com/falserverless/model_tests/diffrythm/rock_en.wav

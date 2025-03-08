@@ -1,6 +1,4 @@
-import React from 'react'
 import { ChevronDown } from 'lucide-react';
-import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {

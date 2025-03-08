@@ -1,5 +1,4 @@
 import React from 'react';
-import { ChevronDown } from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
 import videologo from '../assets/AI-Video-of-alien-in-Las-vegas.gif'
 import Navbar from './Navbar';

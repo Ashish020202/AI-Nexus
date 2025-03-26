@@ -56,11 +56,11 @@ const Dashboard: React.FC = () => {
 
         
         {/* Hero text */}
-        <div className="px-6 md:px-12 py-8 text-center">
-          <p className="text-sm md:text-base opacity-80 max-w-4xl mx-auto">
+        {/* <div className="px-6 md:px-12 py-8 text-center">
+          <h6 className="text-sm md:text-base opacity-80 max-w-4xl mx-auto">
             With our dedicated AI video generator, you can create high-quality 4-second video clips and animations in moments - all from a single image or text prompt, with no need to produce or edit longer films.
-          </p>
-        </div>
+          </h6>
+        </div> */}
       </div>
       
       {/* Feature cards grid - SMALLER CARDS */}

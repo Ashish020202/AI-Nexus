@@ -10,7 +10,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <div className="mr-8">
               
-              <span className="ml-2 text-xl font-semibold">Unified.Ai</span>
+              <span className="ml-2 text-xl font-semibold">AI NEXUS</span>
             </div>
             
             <div className="hidden md:flex space-x-8">
@@ -19,7 +19,11 @@ const Navbar = () => {
                 <ChevronDown className="ml-1 h-4 w-4" />
               </div>
               <div className="flex items-center">
-                <button onClick={()=>navigate('/ImageGeneation')}>Image Generation</button>
+                <button onClick={()=>navigate('/ImageGeneration')}>Image Generation</button>
+                <ChevronDown className="ml-1 h-4 w-4" />
+              </div>
+              <div className="flex items-center">
+                <button onClick={()=>navigate('/CodeGeneration')}>Code Generation</button>
                 <ChevronDown className="ml-1 h-4 w-4" />
               </div>
               <button onClick={()=>navigate('/Musicgeneration')}>Music Generation</button>

@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@fal-ai/client": "^1.2.3",
+    "@google/generative-ai": "^0.24.0",
     "@types/axios": "^0.14.4",
     "@types/cors": "^2.8.17",
     "@types/node-cron": "^3.0.11",

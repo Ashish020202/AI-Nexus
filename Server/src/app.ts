@@ -6,6 +6,8 @@ import imageRouter from "./routes/ImageRoutes"
 import videoRouter from "./routes/videoRoutes"
 import musicRouter from "./routes/MusicRoutes"
 import textRouter from "./routes/textRoutes"
+import codeRouter from "./routes/codeRoutes"
+import authRouter from "./routes/authRoutes"
 
 dotenv.config();
 
@@ -20,6 +22,8 @@ app.use('/api',imageRouter)
 app.use('/api',videoRouter)
 app.use('/api',musicRouter)
 app.use('/api',textRouter);
+app.use('/api',codeRouter);
+app.use('/api',authRouter)
 
 
 

@@ -84,9 +84,9 @@ const ImageGenerationUI = () => {
       <div className="flex gap-6">
         <Sidebar />
         <div className="flex-1">
-          <div className="bg-[#1A1A1F] rounded-lg p-4">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="flex-1 flex items-center bg-[#0B0B0F] rounded-lg px-4 py-2">
+          <div className="bg-[#1A1A1F] rounded-lg p-8">
+             {/* Input Field and Generate Button in a row */}
+            <div className="mb-4 p-4 flex items-center gap-2 bg-black rounded-md border border-purple-600">
                 <span className="text-gray-400 mr-2">🖼</span>
                 <input
                   type="text"
@@ -95,8 +95,7 @@ const ImageGenerationUI = () => {
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                 />
-                <Maximize2 className="w-5 h-5 text-gray-400" />
-              </div>
+                <Maximize2 className="w-5 h-5 text-purple-400" />
               <button
                 className="bg-purple-600 text-gray-200 px-4 py-2 rounded-lg flex items-center gap-2"
                 onClick={handleGenerate}

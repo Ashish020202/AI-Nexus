@@ -1,22 +1,23 @@
-import axios from 'axios';
-import { useState } from 'react';
-import { BASE_URL } from '../config/constant';
-import Sidebar from './sidebar';
+import axios from "axios";
+import { Code } from "lucide-react";
+import { useState } from "react";
+import { BASE_URL } from "../config/constant";
+import Sidebar from "./sidebar";
 
 const CodeGeneration = () => {
-    const [prompt, setPrompt] = useState('');
-    const [generatedCode, setGeneratedCode] = useState('');
+    const [prompt, setPrompt] = useState("");
+    const [generatedCode, setGeneratedCode] = useState("");
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
 
     const handleCodeGeneration = async () => {
         if (!prompt.trim()) {
-            setError('Please enter a prompt.');
+            setError("Please enter a prompt.");
             return;
         }
 
         setLoading(true);
-        setError('');
+        setError("");
 
         try {
             const response = await axios.post(`${BASE_URL}/api/text-gen`, { prompt });
@@ -37,26 +38,30 @@ const CodeGeneration = () => {
 
                 <div className="flex-1">
                     <div className="bg-[#1A1A1F] rounded-lg p-8">
-                        <div className="mb-4 p-4">
+                        {/* Input Field & Button in One Row */}
+                        <div className="mb-4 p-4 flex items-center gap-2 bg-[#0B0B0F] rounded-md border border-purple-600">
+                            <span className="text-gray-400 mr-2">💻</span>
                             <input
                                 type="text"
                                 placeholder="Enter a prompt..."
-                                className="bg-[#0B0B0F] w-full p-4 text-white rounded-md mb-2 border border-purple-600"
+                                className="bg-transparent flex-1 text-white outline-none"
                                 value={prompt}
                                 onChange={(e) => setPrompt(e.target.value)}
                             />
+                            <Code className="w-5 h-5 text-purple-500" />
+                            <button
+                                className="bg-purple-600 text-gray-100 px-4 py-2 rounded-lg"
+                                onClick={handleCodeGeneration}
+                                disabled={loading}
+                            >
+                                {loading ? "Generating..." : "Generate Code"}
+                            </button>
                         </div>
 
-                        <button
-                            className="bg-purple-600 text-gray-100 px-4 py-2 rounded-lg w-full"
-                            onClick={handleCodeGeneration}
-                            disabled={loading}
-                        >
-                            {loading ? 'Generating...' : 'Generate Code'}
-                        </button>
-
+                        {/* Error Message */}
                         {error && <p className="text-red-500 mt-2">{error}</p>}
 
+                        {/* Generated Code Box */}
                         {generatedCode && (
                             <div className="mt-6 p-6 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-lg shadow-lg">
                                 <strong className="text-lg font-bold">Generated Code:</strong>
@@ -73,6 +78,8 @@ const CodeGeneration = () => {
 };
 
 export default CodeGeneration;
+
+
 
 
 

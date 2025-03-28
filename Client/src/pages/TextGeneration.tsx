@@ -124,8 +124,8 @@
 // export default TextGeneration
 
 
-
 import axios from "axios";
+import { Maximize2 } from "lucide-react";
 import { useState } from "react";
 import { BASE_URL } from "../config/constant";
 import Sidebar from "./sidebar";
@@ -219,25 +219,26 @@ const TextGeneration = () => {
 
         <div className="flex-1">
           <div className="bg-[#1A1A1F] rounded-lg p-8">
-            {/* Input Field */}
-            <div className="mb-4 p-4">
+            {/* Input Field and Generate Button in a row with 📝 Symbol */}
+            <div className="mb-2 p-2 flex items-center gap-2 bg-black rounded-md border border-purple-600">
+              <span className="text-purple-400 text-xl">📝</span>
+              {/* <Pencil className="text-purple-500" size={20} /> */}
               <input
                 type="text"
                 placeholder="Enter a prompt..."
-                className="bg-[#0B0B0F] w-full p-4 text-white rounded-md mb-2 border border-purple-600"
+                className="bg-transparent flex-1 p-4 text-white outline-none"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
               />
+              <Maximize2 className="w-6 h-6 text-purple-500 cursor-pointer hover:text-white transition" />
+              <button
+                className="bg-purple-600 text-gray-100 px-4 py-2 rounded-lg"
+                onClick={handleTextGeneration}
+                disabled={loading}
+              >
+                {loading ? "Generating..." : "Generate Text"}
+              </button>
             </div>
-
-            {/* Generate Button */}
-            <button
-              className="bg-purple-600 text-gray-100 px-4 py-2 rounded-lg w-full"
-              onClick={handleTextGeneration}
-              disabled={loading}
-            >
-              {loading ? "Generating..." : "Generate Text"}
-            </button>
 
             {/* Error Message */}
             {error && <p className="text-red-500 mt-2">{error}</p>}
@@ -252,12 +253,7 @@ const TextGeneration = () => {
                 >
                   {copyText}
                 </button>
-                <p
-                  className="mt-3 text-xl leading-relaxed tracking-wide whitespace-pre-wrap"
-                  style={{ fontFamily: "Arial, Helvetica, sans-serif", fontWeight: "500" }}
-                >
-                  {generatedText}
-                </p>
+                <p className="mt-3 text-xl leading-relaxed whitespace-pre-wrap">{generatedText}</p>
               </div>
             )}
 
@@ -272,10 +268,7 @@ const TextGeneration = () => {
                   >
                     {copyCode}
                   </button>
-                  <pre
-                    className="mt-3 p-4 text-sm leading-relaxed tracking-wide whitespace-pre-wrap rounded-md bg-black text-green-400 overflow-x-auto"
-                    style={{ fontFamily: "Courier New, monospace" }}
-                  >
+                  <pre className="mt-3 p-4 text-sm whitespace-pre-wrap rounded-md bg-black text-green-400 overflow-x-auto">
                     {generatedCode}
                   </pre>
                 </div>
@@ -289,7 +282,7 @@ const TextGeneration = () => {
                     >
                       {copyFull}
                     </button>
-                    <p className="mt-3 text-sm leading-relaxed tracking-wide">{explanation}</p>
+                    <p className="mt-3 text-sm">{explanation}</p>
                   </div>
                 )}
               </div>

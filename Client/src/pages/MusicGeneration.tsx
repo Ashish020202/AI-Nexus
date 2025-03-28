@@ -1,3 +1,4 @@
+import { Maximize2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { BASE_URL } from "../config/constant";
 import Sidebar from "./sidebar";
@@ -161,23 +162,22 @@ const MusicGenerationUI = () => {
         <div className="flex-1">
           <div className="bg-[#1A1A1F] rounded-lg p-4">
             {/* Prompt Input and Generate Button */}
-            <div className="flex items-center gap-4 mb-4">
-              <div className="flex-1 flex items-center bg-[#0B0B0F] rounded-lg px-4 py-2">
+              <div className="mb-4 p-4 flex items-center gap-2 bg-black rounded-md border border-purple-600">
                 <span className="text-gray-400 mr-2">🎵</span>
                 <input
                   type="text"
                   placeholder="Type a prompt ..."
-                  className="bg-transparent flex-1 outline-none text-gray-300"
+                  className="bg-black flex-1 p-2 text-white outline-none placeholder-gray-400"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                 />
-              </div>
+              <Maximize2 className="text-purple-500" size={20} />
               <button
-                className="bg-purple-600 text-gray-200 px-4 py-2 rounded-lg flex items-center gap-2"
+                className="bg-purple-600 text-gray-200bg-purple-600 text-gray-100 px-4 py-2 rounded-lg "
                 onClick={handleGenerate}
                 disabled={loading}
               >
-                {loading ? "Generating..." : "Generate"}
+                {loading ? "Generating..." : "Generate Music"}
               </button>
             </div>
 

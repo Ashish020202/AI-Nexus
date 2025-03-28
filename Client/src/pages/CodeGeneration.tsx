@@ -48,7 +48,7 @@ const CodeGeneration = () => {
                         </div>
 
                         <button
-                            className="bg-yellow-800 text-gray-300 px-4 py-2 rounded-lg w-full"
+                            className="bg-purple-600 text-gray-100 px-4 py-2 rounded-lg w-full"
                             onClick={handleCodeGeneration}
                             disabled={loading}
                         >

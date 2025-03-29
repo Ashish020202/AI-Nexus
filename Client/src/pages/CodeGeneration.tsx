@@ -158,27 +158,27 @@ const CodeGeneration = () => {
                     <Sidebar />
                 </div>
 
-                 <div className="flex-1">
-                     <div className="bg-[#1A1A1F] rounded-lg p-8">
-                         {/* Input Field & Button in One Row */}
-                         <div className="mb-4 p-4 flex items-center gap-2 bg-[#0B0B0F] rounded-md border border-purple-600">
-                             <span className="text-gray-400 mr-2">💻</span>
-                             <input
+                <div className="flex-1">
+                    <div className="bg-[#1A1A1F] rounded-lg p-8">
+                        {/* Input Field & Button in One Row */}
+                        <div className="mb-4 p-4 flex items-center gap-2 bg-[#0B0B0F] rounded-md border border-purple-600">
+                            <span className="text-gray-400 mr-2">💻</span>
+                            <input
                                 type="text"
                                  placeholder="Enter a prompt..."
                                  className="bg-transparent flex-1 text-white outline-none"
-                                 //value={prompt}
-                                 onChange={(e) => prompt(e.target.value)}
-                             />
-                             <Code className="w-5 h-5 text-purple-500" />
-                            <button
-                                className="bg-purple-600 text-gray-100 px-4 py-2 rounded-lg"
-                                 onClick={handleTextGeneration}
-                                 disabled={loading}
-                             >
-                                 {loading ? "Generating..." : "Generate Code"}
-                             </button>
-                         </div>
+                                 value={message}
+                                 onChange={(e) => setMessage(e.target.value)}
+                        />
+                    <Code className="w-5 h-5 text-purple-500" />
+                    <button
+                            className="bg-purple-600 text-gray-100 px-4 py-2 rounded-lg"
+                            onClick={handleTextGeneration}
+                            disabled={loading}
+                        >
+                        {loading ? "Generating..." : "Generate Code"}
+                    </button>
+                </div>
 
             {/* Error Message */}
             {error && <p className="text-red-500 mt-2">{error}</p>}

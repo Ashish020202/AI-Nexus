@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { Maximize2 } from 'lucide-react';
-import Sidebar from './sidebar';
+import { useState } from 'react';
 import { BASE_URL } from '../config/constant';
+import Sidebar from './sidebar';
 
 const ImageGenerationUI = () => {
   const [prompt, setPrompt] = useState('');
@@ -19,7 +19,7 @@ const ImageGenerationUI = () => {
         const data = await response.json();
   
         if (data.images && data.images.length > 0) {
-          setImageUrl(data.images[0].url); // Extract and set the image URL
+          setImageUrl(data.images[0].url);
           return;
         }
   
@@ -38,7 +38,6 @@ const ImageGenerationUI = () => {
   
     setError("Image generation is taking too long. Please try again later.");
   };
-  
 
   const handleGenerate = async () => {
     if (!prompt) {
@@ -69,14 +68,25 @@ const ImageGenerationUI = () => {
     }
   };
 
+  const handleDownload = () => {
+    if (imageUrl) {
+      const link = document.createElement('a');
+      link.href = imageUrl;
+      link.download = 'generated-image.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0B0B0F] text-white p-8">
       <div className="flex gap-6">
         <Sidebar />
         <div className="flex-1">
-          <div className="bg-[#1A1A1F] rounded-lg p-4">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="flex-1 flex items-center bg-[#0B0B0F] rounded-lg px-4 py-2">
+          <div className="bg-[#1A1A1F] rounded-lg p-8">
+             {/* Input Field and Generate Button in a row */}
+            <div className="mb-4 p-4 flex items-center gap-2 bg-black rounded-md border border-purple-600">
                 <span className="text-gray-400 mr-2">🖼</span>
                 <input
                   type="text"
@@ -85,10 +95,9 @@ const ImageGenerationUI = () => {
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                 />
-                <Maximize2 className="w-5 h-5 text-gray-400" />
-              </div>
+                <Maximize2 className="w-5 h-5 text-purple-400" />
               <button
-                className="bg-gray-700 text-gray-300 px-4 py-2 rounded-lg flex items-center gap-2"
+                className="bg-purple-600 text-gray-200 px-4 py-2 rounded-lg flex items-center gap-2"
                 onClick={handleGenerate}
                 disabled={loading}
               >
@@ -101,9 +110,17 @@ const ImageGenerationUI = () => {
             {imageUrl ? (
               <div className="mt-10 text-center w-3/4 h-full m-auto">
                 <img src={imageUrl} alt="Generated" className="rounded-lg mx-auto" />
+                
+                {/* Download Button */}
+                <button
+                  className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+                  onClick={handleDownload}
+                >
+                  Download Image
+                </button>
               </div>
             ) : (
-              <div className="mt-8 text-center text-gray-400 border border-gray-800 rounded-lg p-8">
+              <div className="mt-8 text-center text-gray-300 border border-gray-800 rounded-lg p-8">
                Please type a prompt above to create your first image set.
               </div>
             )}

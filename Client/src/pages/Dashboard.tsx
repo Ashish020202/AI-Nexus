@@ -1,6 +1,6 @@
-import React from 'react';
 import { ArrowRight } from 'lucide-react';
-import videologo from '../assets/AI-Video-of-alien-in-Las-vegas.gif'
+import React from 'react';
+import videologo from '../assets/AI-Video-of-alien-in-Las-vegas.gif';
 import Navbar from './Navbar';
 
 const Dashboard: React.FC = () => {
@@ -19,15 +19,26 @@ const Dashboard: React.FC = () => {
       <div className="flex flex-col md:flex-row items-center">
         {/* Left side text content */}
         <div className="w-full md:w-1/2 px-8 py-16 md:py-24 md:pl-16 z-10">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-8">
-            Explore Our Dedicated AI Unified All In One Platform
+          <h1 className="text-6xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-8">
+            <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-[#A66CFF] via-[#F3A683] to-[#FFB6C1] shadow-xl px-8 py-4 rounded-lg inline-block"
+                style={{ fontFamily: "'Monotype Corsiva', 'Pacifico', cursive" }}>
+                  Explore Our Dedicated  All-In-One       AI SaaS Platform
+            </span>
           </h1>
+
+          {/* AI SaaS Platform with Aura Effect */}
+      {/* <h2 className="text-5xl font-bold mb-4 tracking-tight relative z-10 text-center">
+        <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-[#A66CFF] via-[#F3A683] to-[#FFB6C1] shadow-xl px-8 py-4 rounded-lg inline-block"
+            style={{ fontFamily: "'STZhongsong', 'Pacifico', cursive" }}>
+          The All-in-One SaaS Platform
+        </span>
+      </h2> */}
           
           <div>
             <a 
               href="#create-account" 
               className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-purple-500 to-blue-400 text-white font-medium rounded-full hover:opacity-90 transition-opacity"
-            >
+              style={{ fontFamily: "'STZhongsong', 'Pacifico', cursive" }}>
               Create an Account
               <ArrowRight className="ml-2 h-5 w-5" />
             </a>
@@ -56,11 +67,7 @@ const Dashboard: React.FC = () => {
 
         
         {/* Hero text */}
-        <div className="px-6 md:px-12 py-8 text-center">
-          <h6 className="text-sm md:text-base opacity-80 max-w-4xl mx-auto">
-            With our dedicated AI video generator, you can create high-quality 4-second video clips and animations in moments - all from a single image or text prompt, with no need to produce or edit longer films.
-          </h6>
-        </div>
+
       </div>
       
       {/* Feature cards grid - SMALLER CARDS */}
@@ -73,8 +80,8 @@ const Dashboard: React.FC = () => {
               <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
           </div>
-          <h2 className="text-xl font-bold mb-2">Bring Your Images to Life</h2>
-          <p className="text-gray-400 text-sm">
+          <h2 className="text-xl font-bold mb-2" style={{ fontFamily: "'Sitka Small', 'Pacifico', cursive", color: "#9b5de5"}}>Bring Your Images to Life</h2>
+          <p className="text-gray-200 text-sm" style={{ fontFamily: "'Century', 'Pacifico', cursive"}}>
             Turn AI generations from your Personal Feed and uploaded images into high-quality AI video in seconds, breathing new life into your creations.
           </p>
         </div>
@@ -87,8 +94,8 @@ const Dashboard: React.FC = () => {
               <rect x="9" y="8" width="6" height="8" rx="1" />
             </svg>
           </div>
-          <h2 className="text-xl font-bold mb-2">Explore a New Mode of Storytelling</h2>
-          <p className="text-gray-400 text-sm">
+          <h2 className="text-xl font-bold mb-2" style={{ fontFamily: "'Sitka Small', 'Pacifico', cursive", color: "#9b5de5"}} >Explore a New Mode of Storytelling</h2>
+          <p className="text-gray-200 text-sm" style={{ fontFamily: "'Century', 'Pacifico', cursive"}}>
             Use AI video to craft compelling narratives for branded or personal projects. Combine AI generated video with other content media craft dynamic and engaging stories.
           </p>
         </div>
@@ -101,8 +108,8 @@ const Dashboard: React.FC = () => {
               <path d="M8 12h8M12 8v8" />
             </svg>
           </div>
-          <h2 className="text-xl font-bold mb-2">Accelerate Your Video Production Process</h2>
-          <p className="text-gray-400 text-sm">
+          <h2 className="text-xl font-bold mb-2" style={{ fontFamily: "'Sitka Small', 'Pacifico', cursive", color: "#9b5de5" }}>Accelerate Your Video Production Process</h2>
+          <p className="text-gray-200 text-sm" style={{ fontFamily: "'Century', 'Pacifico', cursive"}}>
             Quickly generate AI videos from a selection of image styles and aesthetics, perfectly aligning with your video project needs.
           </p>
         </div>
@@ -114,8 +121,8 @@ const Dashboard: React.FC = () => {
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fillOpacity="0.5" />
             </svg>
           </div>
-          <h2 className="text-xl font-bold mb-2">Create Animated Storyboards and Trailers</h2>
-          <p className="text-gray-400 text-sm">
+          <h2 className="text-xl font-bold mb-2" style={{ fontFamily: "'Sitka Small', 'Pacifico', cursive", color: "#9b5de5"}}>Create Animated Storyboards and Trailers</h2>
+          <p className="text-gray-200 text-sm" style={{ fontFamily: "'Century', 'Pacifico', cursive"}}>
             Use our AI video tools to guide your tram through pre-production - create sizzle reels, pre-viz, storyboards and concept art.
           </p>
         </div>

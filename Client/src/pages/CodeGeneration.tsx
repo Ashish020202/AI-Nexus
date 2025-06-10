@@ -1,88 +1,3 @@
-// import axios from "axios";
-// import { Code } from "lucide-react";
-// import { useState } from "react";
-// import { BASE_URL } from "../config/constant";
-// import Sidebar from "./sidebar";
-
-// const CodeGeneration = () => {
-//     const [prompt, setPrompt] = useState("");
-//     const [generatedCode, setGeneratedCode] = useState("");
-//     const [loading, setLoading] = useState(false);
-//     const [error, setError] = useState("");
-
-//     const handleCodeGeneration = async () => {
-//         if (!prompt.trim()) {
-//             setError("Please enter a prompt.");
-//             return;
-//         }
-
-//         setLoading(true);
-//         setError("");
-
-//         try {
-//             const response = await axios.post(`${BASE_URL}/api/text-gen`, { prompt });
-//             setGeneratedCode(response.data.message.text);
-//         } catch (error) {
-//             setError("Failed to generate code. Try again.");
-//         } finally {
-//             setLoading(false);
-//         }
-//     };
-
-//     return (
-//         <div className="min-h-screen bg-[#0B0B0F] text-white p-8">
-//             <div className="flex flex-col lg:flex-row gap-6">
-//                 <div className="hidden lg:block">
-//                     <Sidebar />
-//                 </div>
-
-//                 <div className="flex-1">
-//                     <div className="bg-[#1A1A1F] rounded-lg p-8">
-//                         {/* Input Field & Button in One Row */}
-//                         <div className="mb-4 p-4 flex items-center gap-2 bg-[#0B0B0F] rounded-md border border-purple-600">
-//                             <span className="text-gray-400 mr-2">💻</span>
-//                             <input
-//                                 type="text"
-//                                 placeholder="Enter a prompt..."
-//                                 className="bg-transparent flex-1 text-white outline-none"
-//                                 value={prompt}
-//                                 onChange={(e) => setPrompt(e.target.value)}
-//                             />
-//                             <Code className="w-5 h-5 text-purple-500" />
-//                             <button
-//                                 className="bg-purple-600 text-gray-100 px-4 py-2 rounded-lg"
-//                                 onClick={handleCodeGeneration}
-//                                 disabled={loading}
-//                             >
-//                                 {loading ? "Generating..." : "Generate Code"}
-//                             </button>
-//                         </div>
-
-//                         {/* Error Message */}
-//                         {error && <p className="text-red-500 mt-2">{error}</p>}
-
-//                         {/* Generated Code Box */}
-//                         {generatedCode && (
-//                             <div className="mt-6 p-6 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-lg shadow-lg">
-//                                 <strong className="text-lg font-bold">Generated Code:</strong>
-//                                 <pre className="mt-3 text-sm font-mono bg-black p-4 rounded-md overflow-x-auto whitespace-pre-wrap">
-//                                     {generatedCode}
-//                                 </pre>
-//                             </div>
-//                         )}
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default CodeGeneration;
-
-
-
-
-
 import axios from "axios";
 import { Code } from "lucide-react";
 import { useState } from "react";
@@ -120,15 +35,29 @@ const CodeGeneration = () => {
 
       let newCode = "";
       let newExplanation = "";
-      let isCode = generatedResponse.includes("{") || generatedResponse.includes("}");
+      // Improved code detection to include Python code blocks
+      let isCode = generatedResponse.includes("```") || 
+                  generatedResponse.includes("def ") || 
+                  generatedResponse.includes("class ") ||
+                  generatedResponse.includes("import ") ||
+                  generatedResponse.includes("from ");
 
       if (isCode) {
-        const codeMatch = generatedResponse.match(/```[\s\S]*?```/g);
+        // First try to find code blocks with backticks
+        const codeMatch = generatedResponse.match(/```(?:python|py)?\n([\s\S]*?)```/);
         if (codeMatch) {
-          newCode = codeMatch[0].replace(/```(js|javascript|python|tsx|ts|html|css|json)?\n?/, "").replace(/```$/, "").trim();
+          newCode = codeMatch[1].trim();
           newExplanation = generatedResponse.replace(codeMatch[0], "").trim();
         } else {
-          newCode = generatedResponse;
+          // If no code blocks found, check for Python code patterns
+          const pythonCodePattern = /(?:def|class|import|from)[\s\S]*?(?=\n\n|$)/;
+          const pythonMatch = generatedResponse.match(pythonCodePattern);
+          if (pythonMatch) {
+            newCode = pythonMatch[0].trim();
+            newExplanation = generatedResponse.replace(pythonMatch[0], "").trim();
+          } else {
+            newCode = generatedResponse;
+          }
         }
       } else {
         newExplanation = generatedResponse;

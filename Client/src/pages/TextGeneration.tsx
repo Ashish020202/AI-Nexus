@@ -1,145 +1,39 @@
-
-// import axios from 'axios'
-// import { useState } from 'react'
-// import { BASE_URL } from '../config/constant'
-// import Sidebar from './sidebar'
-
-// const TextGeneration = () => {
-
-//     const [message, setMessage] = useState('');
-//     const [generatedText,setgeneratedText]=useState('');
-//     const [generatedCode,setgeneratedCode]=useState('');
-//     const [loading,setLoading] = useState(false);
-//     const [error,setError] = useState('');
-      
-
-//     const handleTextGeneration = async () => {
-
-//         if (!message.trim()) {
-//             setError('Please enter a prompt.');
-//             return;
-//           }
-          
-          
-//           setLoading(true);
-//           setError('');
-
-//         try {
-
-//         const response =await axios.post(`${BASE_URL}/api/text-gen`,{message})
-        
-//         setgeneratedText(response.data.message.content[0].text)
-//         setgeneratedCode(response.data.message.content[0].text)
-
-//         } catch (error) {
-
-//             setError("Failed to generate text. Try again.");
-            
-//         }
-//         finally {
-//             setLoading(false);
-//           }
-        
-//     }
-
-
-//   return (
-//     <div className="min-h-screen bg-[#0B0B0F] text-white p-8">
-//       <div className="flex flex-col lg:flex-row gap-6">
-//         <div className="hidden lg:block">
-//           <Sidebar />
-//         </div>
-
-//         <div className="flex-1">
-//           <div className="bg-[#1A1A1F] rounded-lg p-8">
-//             <div className="mb-4 p-4">
-//               <input
-//                 type="text"
-//                 placeholder="Enter a prompt..."
-//                 className="bg-[#0B0B0F] w-full p-4 text-white rounded-md mb-2 border border-purple-600"
-//                 value={message}
-//                 onChange={(e) => setMessage(e.target.value)}
-//               />
-//             </div>
-
-//             {/* Generate Button */}
-//             <button
-//               className="bg-yellow-800 text-gray-300 px-4 py-2 rounded-lg w-full"
-//               onClick={handleTextGeneration}
-//               disabled={loading}
-//             >
-//               {loading ? 'Generating...' : 'Generate Text'}
-//             </button>
-
-//             {/* Error Message */}
-//             {error && <p className="text-red-500 mt-2">{error}</p>}
-
-//             {/* {generatedText && (
-//               <div className="mt-6 p-6 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-lg shadow-lg">
-//                 <strong className="text-lg ">Generated Text:</strong>
-//                 <p className="mt-3 text-xl  leading-relaxed tracking-wide whitespace-pre-line"
-//                   style={{ fontFamily: "'Times, 'Times New Roman'', sans-serif" }}>
-//                   {generatedText}
-//                 </p>
-//               </div>
-//             )} */}
-
-//             {/* Generated Text */}
-//             {generatedText && (
-//             <div className="mt-6 p-6 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-lg shadow-lg">
-//               <strong className="text-lg">Generated Text:</strong>
-//               <pre 
-//                 className="mt-3 text-xl leading-relaxed tracking-wide whitespace-pre-wrap" 
-//                 style={{ fontFamily: "Arial, Helvetica, sans-serif", fontWeight: "500" }}
-//               >
-//                 {generatedText.split(" ").map((word, index) => (
-//                   <span key={index} className={word.length > 6 ? "font-bold" : ""}>
-//                     {word}{" "}
-//                   </span>
-//                 ))}
-//               </pre>
-//             </div>
-//           )}
-
-//           {/* Generated Code Block */}
-//           {generatedCode && (
-//             <div className="mt-6 p-4 bg-black text-green-400 rounded-lg shadow-lg overflow-x-auto">
-//               <strong className="text-lg">Generated Code:</strong>
-//               <pre 
-//                 className="mt-3 p-4 text-sm leading-relaxed tracking-wide whitespace-pre-wrap rounded-md"
-//                 style={{ fontFamily: "Courier New, monospace" }}
-//               >
-//                 {generatedCode}
-//               </pre>
-//             </div>
-//           )}
-
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default TextGeneration
-
-
 import axios from "axios";
 import { Maximize2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BASE_URL } from "../config/constant";
 import Sidebar from "./sidebar";
 
 const TextGeneration = () => {
-  const [message, setMessage] = useState("");
-  const [generatedText, setGeneratedText] = useState("");
-  const [generatedCode, setGeneratedCode] = useState("");
-  const [explanation, setExplanation] = useState("");
+  const [message, setMessage] = useState(() => {
+    const savedMessage = localStorage.getItem('textGenMessage');
+    return savedMessage || "";
+  });
+  const [generatedText, setGeneratedText] = useState(() => {
+    const savedText = localStorage.getItem('textGenGeneratedText');
+    return savedText || "";
+  });
+  const [generatedCode, setGeneratedCode] = useState(() => {
+    const savedCode = localStorage.getItem('textGenGeneratedCode');
+    return savedCode || "";
+  });
+  const [explanation, setExplanation] = useState(() => {
+    const savedExplanation = localStorage.getItem('textGenExplanation');
+    return savedExplanation || "";
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [copyText, setCopyText] = useState("Copy");
   const [copyCode, setCopyCode] = useState("Copy Code");
   const [copyFull, setCopyFull] = useState("Copy Full Response");
+
+  // Save state to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('textGenMessage', message);
+    localStorage.setItem('textGenGeneratedText', generatedText);
+    localStorage.setItem('textGenGeneratedCode', generatedCode);
+    localStorage.setItem('textGenExplanation', explanation);
+  }, [message, generatedText, generatedCode, explanation]);
 
   const handleTextGeneration = async () => {
     if (!message.trim()) {

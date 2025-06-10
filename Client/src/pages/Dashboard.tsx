@@ -2,8 +2,10 @@ import { ArrowRight } from 'lucide-react';
 import React from 'react';
 import videologo from '../assets/AI-Video-of-alien-in-Las-vegas.gif';
 import Navbar from './Navbar';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate()
   return (
     <div className="min-h-screen bg-black text-white">
       
@@ -36,7 +38,7 @@ const Dashboard: React.FC = () => {
           
           <div>
             <a 
-              href="#create-account" 
+              href='/auth'
               className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-purple-500 to-blue-400 text-white font-medium rounded-full hover:opacity-90 transition-opacity"
               style={{ fontFamily: "'STZhongsong', 'Pacifico', cursive" }}>
               Create an Account

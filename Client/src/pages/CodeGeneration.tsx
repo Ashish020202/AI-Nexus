@@ -20,6 +20,19 @@ const CodeGeneration = () => {
   const [error, setError] = useState("");
   const [history, setHistory] = useState<HistoryEntry[]>([]); // Store past prompts
 
+  // Add clearSession function
+  const clearSession = () => {
+    setMessage('');
+    setGeneratedText('');
+    setGeneratedCode('');
+    setExplanation('');
+    setError('');
+    setHistory([]);
+  };
+
+  console.log(history);
+  
+
   const handleTextGeneration = async () => {
     if (!message.trim()) {
       setError("Please enter a prompt.");
@@ -107,10 +120,24 @@ const CodeGeneration = () => {
                         >
                         {loading ? "Generating..." : "Generate Code"}
                     </button>
+                    <button
+                        className="bg-gray-600 text-gray-200 px-4 py-2 rounded-lg flex items-center gap-2"
+                        onClick={clearSession}
+                    >
+                        Clear
+                    </button>
                 </div>
 
             {/* Error Message */}
             {error && <p className="text-red-500 mt-2">{error}</p>}
+
+            {/* Loading Spinner */}
+            {loading && (
+              <div className="mt-8 text-center">
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-purple-600 border-t-transparent"></div>
+                <p className="mt-2 text-gray-400">Generating your code...</p>
+              </div>
+            )}
 
             {/* Generated Text Section */}
             {generatedText && (

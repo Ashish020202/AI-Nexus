@@ -4,11 +4,41 @@ import { BASE_URL } from "../config/constant";
 import Sidebar from "./sidebar";
 
 const MusicGenerationUI = () => {
-  const [prompt, setPrompt] = useState("");
-  const [musicUrl, setMusicUrl] = useState<string | null>(null);
+  const [prompt, setPrompt] = useState(() => {
+    // Initialize prompt from localStorage if available
+    return localStorage.getItem('musicGenPrompt') || '';
+  });
+  const [musicUrl, setMusicUrl] = useState<string | null>(() => {
+    // Initialize musicUrl from localStorage if available
+    return localStorage.getItem('musicGenUrl');
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [audioPlaying, setAudioPlaying] = useState(false);
+  const [isPolling, setIsPolling] = useState(false);
+
+  // Save prompt to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('musicGenPrompt', prompt);
+  }, [prompt]);
+
+  // Save musicUrl to localStorage whenever it changes
+  useEffect(() => {
+    if (musicUrl) {
+      localStorage.setItem('musicGenUrl', musicUrl);
+    } else {
+      localStorage.removeItem('musicGenUrl');
+    }
+  }, [musicUrl]);
+
+  // Clear session data
+  const clearSession = () => {
+    localStorage.removeItem('musicGenPrompt');
+    localStorage.removeItem('musicGenUrl');
+    setPrompt('');
+    setMusicUrl(null);
+    setError(null);
+  };
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -36,6 +66,7 @@ const MusicGenerationUI = () => {
 
       const { requestId } = await response.json();
       let status = "IN_PROGRESS";
+      setIsPolling(true);
 
       while (status === "IN_PROGRESS") {
         await new Promise((resolve) => setTimeout(resolve, 5000));
@@ -45,26 +76,37 @@ const MusicGenerationUI = () => {
         const statusData = await statusResponse.json();
         status = statusData.status;
 
-        if (status === "FAILED") throw new Error("Music generation failed.");
+        if (status === "FAILED") {
+          setIsPolling(false);
+          throw new Error("Music generation failed.");
+        }
       }
 
-      if (status !== "COMPLETED") throw new Error("Unexpected status: " + status);
+      if (status !== "COMPLETED") {
+        setIsPolling(false);
+        throw new Error("Unexpected status: " + status);
+      }
 
       const resultResponse = await fetch(
         `${BASE_URL}/api/get-music/${requestId}`
       );
       const resultData = await resultResponse.json();
 
-      if (!resultData.audio) throw new Error("Failed to retrieve generated music.");
+      if (!resultData.audio) {
+        setIsPolling(false);
+        throw new Error("Failed to retrieve generated music.");
+      }
 
       // Convert the audio URL to a Blob
-    const audioResponse = await fetch(resultData.audio.url);
-    const audioBlob = await audioResponse.blob();
-    const audioObjectURL = URL.createObjectURL(audioBlob);
+      const audioResponse = await fetch(resultData.audio.url);
+      const audioBlob = await audioResponse.blob();
+      const audioObjectURL = URL.createObjectURL(audioBlob);
 
       setMusicUrl(audioObjectURL);
+      setIsPolling(false);
     } catch (err: any) {
       setError(err.message);
+      setIsPolling(false);
     } finally {
       setLoading(false);
     }
@@ -173,17 +215,31 @@ const MusicGenerationUI = () => {
                 />
               <Maximize2 className="text-purple-500" size={20} />
               <button
-                className="bg-purple-600 text-gray-200bg-purple-600 text-gray-100 px-4 py-2 rounded-lg "
+                className="bg-purple-600 text-gray-200 px-4 py-2 rounded-lg disabled:opacity-50"
                 onClick={handleGenerate}
-                disabled={loading}
+                disabled={loading || isPolling}
               >
-                {loading ? "Generating..." : "Generate Music"}
+                {loading ? "Generating..." : isPolling ? "Processing..." : "Generate Music"}
+              </button>
+              <button
+                className="bg-gray-600 text-gray-200 px-4 py-2 rounded-lg flex items-center gap-2"
+                onClick={clearSession}
+              >
+                Clear
               </button>
             </div>
 
             {error && <p className="text-red-500 mt-2">{error}</p>}
 
-            {musicUrl ? (
+            {/* Loading Spinner */}
+            {(loading || isPolling) && (
+              <div className="mt-8 text-center">
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-purple-600 border-t-transparent"></div>
+                <p className="mt-2 text-gray-400">Generating your masterpiece...</p>
+              </div>
+            )}
+
+            {musicUrl && !loading && !isPolling ? (
               <div className="mt-6 text-center">
                 {/* Audio Player */}
                 <audio
@@ -213,11 +269,11 @@ const MusicGenerationUI = () => {
                   className="mt-4 bg-black rounded-lg w-full"
                 />
               </div>
-            ) : (
+            ) : !loading && !isPolling ? (
               <div className="mt-6 text-center text-gray-400 border border-gray-800 rounded-lg p-8">
                 Type a prompt and generate music.
               </div>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

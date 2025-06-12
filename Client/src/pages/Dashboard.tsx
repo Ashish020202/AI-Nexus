@@ -2,10 +2,9 @@ import { ArrowRight } from 'lucide-react';
 import React from 'react';
 import videologo from '../assets/AI-Video-of-alien-in-Las-vegas.gif';
 import Navbar from './Navbar';
-import { Navigate, useNavigate } from 'react-router-dom';
+
 
 const Dashboard: React.FC = () => {
-  const navigate = useNavigate()
   return (
     <div className="min-h-screen bg-black text-white">
       

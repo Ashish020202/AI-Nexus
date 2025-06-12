@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import axios from 'axios';
 import { BASE_URL } from '../config/constant';
-import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
 
 const Auth: React.FC = () => {

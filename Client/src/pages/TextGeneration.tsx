@@ -27,6 +27,19 @@ const TextGeneration = () => {
   const [copyCode, setCopyCode] = useState("Copy Code");
   const [copyFull, setCopyFull] = useState("Copy Full Response");
 
+  // Add clearSession function
+  const clearSession = () => {
+    localStorage.removeItem('textGenMessage');
+    localStorage.removeItem('textGenGeneratedText');
+    localStorage.removeItem('textGenGeneratedCode');
+    localStorage.removeItem('textGenExplanation');
+    setMessage('');
+    setGeneratedText('');
+    setGeneratedCode('');
+    setExplanation('');
+    setError('');
+  };
+
   // Save state to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('textGenMessage', message);
@@ -132,10 +145,24 @@ const TextGeneration = () => {
               >
                 {loading ? "Generating..." : "Generate Text"}
               </button>
+              <button
+                className="bg-gray-600 text-gray-200 px-4 py-2 rounded-lg flex items-center gap-2"
+                onClick={clearSession}
+              >
+                Clear
+              </button>
             </div>
 
             {/* Error Message */}
             {error && <p className="text-red-500 mt-2">{error}</p>}
+
+            {/* Loading Spinner */}
+            {loading && (
+              <div className="mt-8 text-center">
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-purple-600 border-t-transparent"></div>
+                <p className="mt-2 text-gray-400">Generating your response...</p>
+              </div>
+            )}
 
             {/* Generated Text Box */}
             {generatedText && (

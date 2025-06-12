@@ -6,18 +6,41 @@ import ImageGenerationUI from '../pages/ImageGeneration';
 import TextGeneration from '../pages/TextGeneration';
 import VideoGeneration from '../pages/VideoGeneration';
 import CodeGeneration from '../pages/CodeGeneration';
-
+import Auth from '../pages/Auth';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path='/' element={<Landing />} />
-      <Route path='Dashboard' element={<Dashboard />} />
-      <Route path='ImageGeneration' element={<ImageGenerationUI />} />
-      <Route path='MusicGeneration' element={<MusicGenerationUI />} />
-      <Route path='TextGeneration' element={<TextGeneration />} />
-      <Route path='VideoGeneration' element={<VideoGeneration />} />
-      <Route path='CodeGeneration' element={<CodeGeneration />} />
+      <Route path='/auth' element={<Auth />} />
+      <Route path='Dashboard' element={ <Dashboard />} />
+      
+      <Route path='ImageGeneration' element={
+        <ProtectedRoute>
+          <ImageGenerationUI />
+        </ProtectedRoute>
+      } />
+      <Route path='MusicGeneration' element={
+        <ProtectedRoute>
+          <MusicGenerationUI />
+        </ProtectedRoute>
+      } />
+      <Route path='TextGeneration' element={
+        <ProtectedRoute>
+          <TextGeneration />
+        </ProtectedRoute>
+      } />
+      <Route path='VideoGeneration' element={
+        <ProtectedRoute>
+          <VideoGeneration />
+        </ProtectedRoute>
+      } />
+      <Route path='CodeGeneration' element={
+        <ProtectedRoute>
+          <CodeGeneration />
+        </ProtectedRoute>
+      } />
     </Routes>
   )
 }

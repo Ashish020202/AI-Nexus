@@ -5,11 +5,11 @@ const Navbar = () => {
   return (
     <div>
       {/* Navbar */}
-      <nav className="relative z-10 flex items-center justify-start px-6 py-4 md:px-12">
+      <nav className="relative z-10 flex items-center justify-start px-6 py-8 md:px-12">
         
         {/* Logo */}
         <div className="flex items-center mr-auto">
-        <div className="absolute left-0 pl-6 flex items-center">
+        <div className="absolute pl-2 flex items-center">
           <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-[#A66CFF] via-[#F3A683] to-[#FFB6C1] 
                           shadow-3xl px-13 py-8 rounded-lg inline-block text-4xl tracking-wide font-bold"
                 style={{ fontFamily: "'Monotype Corsiva', 'Pacific'" }}> AI Nexus 
@@ -37,19 +37,18 @@ const Navbar = () => {
         </div>
 
         {/* Launch Button with "Upcoming New" Badge */}
-        <div className="relative inline-block ml-6">
+       
           {/* Small badge box (aligned properly) */}
-          <div className="absolute -top-4 -left-4 bg-purple-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow-md">
+          {/* <div className="absolute -top-4 -left-4 bg-purple-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow-md">
             Upcoming New 🚀
-          </div>
+          </div> */}
 
           {/* Main Button */}
-          <button className="rounded-full bg-gradient-to-r from-purple-700 to-purple-500 px-8 py-3 text-white text-lg font-semibold 
+          {/* <button className="rounded-full bg-gradient-to-r from-purple-700 to-purple-500 px-8 py-3 text-white text-lg font-semibold 
                              shadow-lg transition-all duration-300 hover:scale-110 hover:from-purple-600 hover:to-purple-400">
             Launch App
-          </button>
-        </div>
-
+          </button> */}
+       
       </nav>
     </div>
   );

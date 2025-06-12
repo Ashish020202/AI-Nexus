@@ -30,6 +30,9 @@ const CodeGeneration = () => {
     setHistory([]);
   };
 
+  console.log(history);
+  
+
   const handleTextGeneration = async () => {
     if (!message.trim()) {
       setError("Please enter a prompt.");
